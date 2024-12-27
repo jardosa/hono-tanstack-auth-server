@@ -20,6 +20,9 @@ export const auth = betterAuth({
   }),
   emailAndPassword: {
     enabled: true,
+    sendResetPassword: async ({ user, url, token }, request) => {
+      console.log({ user, url })
+    }
   },
   socialProviders: {
     github: {
@@ -27,5 +30,15 @@ export const auth = betterAuth({
       clientSecret: process.env.GITHUB_CLIENT_SECRET ?? '',
     }
   },
+  advanced: {
+    cookiePrefix: process.env.BETTER_AUTH_COOKIE_PREFIX
+  },
+  emailVerification: {
+    sendVerificationEmail: async ({ user, url, token }, request) => {
+      console.log({ user, url, token })
+    },
+    sendOnSignUp: true
+  },
+
 
 })
