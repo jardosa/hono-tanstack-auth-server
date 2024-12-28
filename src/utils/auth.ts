@@ -39,6 +39,15 @@ export const auth = betterAuth({
     },
     sendOnSignUp: true
   },
-
-
+  account: {
+    accountLinking: {
+      enabled: true
+    }
+  },
+  session: {
+    cookieCache: {
+      enabled: true,
+      maxAge: 5 * 60 // Cache duration in seconds
+    }
+  }
 })
