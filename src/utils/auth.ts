@@ -2,6 +2,7 @@ import pg from 'pg'
 import { betterAuth } from 'better-auth'
 import * as dotenv from 'dotenv';
 import * as path from 'path';
+import { twoFactor } from 'better-auth/plugins';
 
 const envPath = path.resolve(
   import.meta.dirname,
@@ -10,6 +11,7 @@ const envPath = path.resolve(
 dotenv.config({ path: envPath });
 
 export const auth = betterAuth({
+  appName:process.env.BETTER_AUTH_APP_NAME ?? 'test',
   trustedOrigins: ['http://localhost:3001'],
   database: new pg.Pool({
     host: process.env.DB_HOST,
@@ -18,6 +20,7 @@ export const auth = betterAuth({
     port: process.env.DB_PORT as unknown as number,
     database: process.env.DB_NAME,
   }),
+  plugins: [twoFactor()],
   emailAndPassword: {
     enabled: true,
     sendResetPassword: async ({ user, url, token }, request) => {
