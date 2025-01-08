@@ -2,7 +2,7 @@ import pg from 'pg'
 import { betterAuth } from 'better-auth'
 import * as dotenv from 'dotenv';
 import * as path from 'path';
-import { emailOTP, twoFactor } from 'better-auth/plugins';
+import { admin, emailOTP, organization, twoFactor } from 'better-auth/plugins';
 
 const envPath = path.resolve(
   import.meta.dirname,
@@ -21,6 +21,8 @@ export const auth = betterAuth({
     database: process.env.DB_NAME,
   }),
   plugins: [
+    organization(),
+    admin(),
     twoFactor(),
     emailOTP({
       async sendVerificationOTP({ email, otp, type }) {
@@ -64,5 +66,4 @@ export const auth = betterAuth({
       maxAge: 5 * 60 // Cache duration in seconds
     }
   },
-
 })
