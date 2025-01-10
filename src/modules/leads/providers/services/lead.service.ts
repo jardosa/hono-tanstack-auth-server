@@ -1,11 +1,13 @@
+import type { LeadCreateDto } from '../../dto/LeadCreate.dto.js'
 import * as LeadRepository from '../repositories/lead.repository.js'
 
 const leadService = () => {
   const leadRepo = LeadRepository
 
-  const createLead = () => {
+  const createLead = async (payload: LeadCreateDto) => {
+    const newLead = await leadRepo.createLead(payload)
 
-    console.log('create lead')
+    return newLead
   }
 
   const findLead = () => {
