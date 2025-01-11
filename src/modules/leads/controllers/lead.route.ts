@@ -13,7 +13,10 @@ export const lead = new Hono()
 
     return c.json(newLead)
   })
-  .get('/:id', (c) => c.json(`get ${c.req.param('id')}`))
+  .get('/:id', async (c) => {
+    const lead = await leadService().getLead(c.req.param('id'))
+    return c.json(lead)
+  })
   .delete('/:id', (c) => c.json(`delete ${c.req.param('id')}`))
   .put('/:id', (c) => c.json(`update ${c.req.param('id')} with body ${c.req.parseBody()}`))
 

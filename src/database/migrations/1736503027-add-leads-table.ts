@@ -1,5 +1,5 @@
 import { Kysely, sql } from 'kysely'
-import type { Lead } from '../../types.js'
+
 
 export async function up(db: Kysely<any>): Promise<void> {
   await db.schema

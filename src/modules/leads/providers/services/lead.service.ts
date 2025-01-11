@@ -10,9 +10,10 @@ const leadService = () => {
     return newLead
   }
 
-  const findLead = () => {
+  const getLead = async (id: string) => {
+    const lead = await leadRepo.findLeadById(id)
 
-    console.log('find lead')
+    return lead
   }
   const updateLead = () => {
 
@@ -25,7 +26,7 @@ const leadService = () => {
 
   return {
     createLead,
-    findLead,
+    getLead,
     updateLead,
     deleteLead,
   }
