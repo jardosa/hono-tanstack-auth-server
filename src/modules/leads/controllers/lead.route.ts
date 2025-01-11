@@ -6,11 +6,10 @@ import { leadCreateDto } from "../dto/LeadCreate.dto.js";
 
 export const lead = new Hono()
   .get('/', (c) => c.json('list leads'))
-  .post('/', zValidator('json', leadCreateDto), (c) => {
+  .post('/', zValidator('json', leadCreateDto), async (c) => {
     const validated = c.req.valid('json')
 
-    const newLead = leadService().createLead(validated)
-
+    const newLead = await leadService().createLead(validated)
     return c.json(newLead)
   })
   .get('/:id', async (c) => {
