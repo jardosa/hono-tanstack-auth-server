@@ -42,7 +42,11 @@ export async function findLeads(criteria: Partial<Lead>) {
 }
 
 export async function updateLead(id: string, updateWith: LeadUpdate) {
-  const result = await db.updateTable('lead').set(updateWith).where('id', '=', id).returningAll().executeTakeFirst()
+  const result = await db.updateTable('lead')
+    .set(updateWith)
+    .where('id', '=', id)
+    .returningAll()
+    .executeTakeFirst()
   return result
 }
 
@@ -54,7 +58,8 @@ export async function createLead(lead: NewLead) {
 }
 
 export async function deleteLead(id: string) {
-  return await db.deleteFrom('lead').where('id', '=', id)
+  return await db.deleteFrom('lead')
+    .where('id', '=', id)
     .returningAll()
     .executeTakeFirst()
 }

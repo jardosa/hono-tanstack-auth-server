@@ -1,8 +1,8 @@
 import { Hono } from "hono";
 import { zValidator } from '@hono/zod-validator'
-import z from 'zod'
 import leadService from "../providers/services/lead.service.js";
-import { leadCreateDto, leadUpdateDto } from "../dto/LeadCreate.dto.js";
+import { leadCreateDto, leadUpdateDto } from "../dto/index.js";
+
 
 export const lead = new Hono()
   .get('/', (c) => c.json('list leads'))
@@ -16,14 +16,18 @@ export const lead = new Hono()
     const lead = await leadService().getLead(c.req.param('id'))
     return c.json(lead)
   })
-  .delete('/:id', (c) => c.json(`delete ${c.req.param('id')}`))
+  .delete('/:id', async (c) => {
+    const deletedLead = await leadService().deleteLead(c.req.param('id'))
+
+    return c.json(deletedLead)
+  })
   .put('/:id', zValidator('json', leadUpdateDto), async (c) => {
     const id = c.req.param('id')
     const validated = c.req.valid('json')
 
-    const newLead = await leadService().updateLead(id, validated)
+    const updatedLead = await leadService().updateLead(id, validated)
 
 
-    return c.json(newLead)
+    return c.json(updatedLead)
   })
 
