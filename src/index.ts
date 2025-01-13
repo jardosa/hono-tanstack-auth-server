@@ -23,7 +23,7 @@ app.use(
 app.on(["POST", "GET"], "/auth/**", (c) => auth.handler(c.req.raw));
 
 app.get('/', (c) => {
-  return c.text('Hello Hono!')
+	return c.text('Hello Hono!')
 })
 
 app.route('/lead', lead)
@@ -32,11 +32,13 @@ const port = process.env.PORT as unknown as number || 3000
 console.log(`Server is running on http://localhost:${port}`)
 
 // TODO: Make npm script for this
-await migrator.migrateToLatest()
+const { error, results } = await migrator.migrateToLatest()
+if (error) console.log('Migration Errors', error)
+if (results?.length) console.log('Migration Results', results)
 
 
 serve({
-  fetch: app.fetch,
+	fetch: app.fetch,
 	port,
 })
 
