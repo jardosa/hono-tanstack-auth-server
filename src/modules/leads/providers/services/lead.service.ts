@@ -1,3 +1,5 @@
+
+import type { LeadUpdate } from '../../../../types.js'
 import type { LeadCreateDto } from '../../dto/LeadCreate.dto.js'
 import * as LeadRepository from '../repositories/lead.repository.js'
 
@@ -15,9 +17,11 @@ const leadService = () => {
 
     return lead
   }
-  const updateLead = () => {
+  const updateLead = async (id: string, payload: LeadUpdate) => {
 
-    console.log('update lead')
+    const updatedLead = await leadRepo.updateLead(id, payload)
+
+    return updatedLead
   }
   const deleteLead = () => {
 

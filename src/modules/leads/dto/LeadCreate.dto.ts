@@ -7,4 +7,7 @@ export const leadCreateDto = z.object({
   email: z.string().email(),
 })
 
+export const leadUpdateDto = leadCreateDto.partial()
+
 export type LeadCreateDto = z.infer<typeof leadCreateDto>
+export type LeadUpdateDto = z.infer<typeof leadUpdateDto>

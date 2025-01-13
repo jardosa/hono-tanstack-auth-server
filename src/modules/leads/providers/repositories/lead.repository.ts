@@ -42,7 +42,8 @@ export async function findLeads(criteria: Partial<Lead>) {
 }
 
 export async function updateLead(id: string, updateWith: LeadUpdate) {
-  await db.updateTable('lead').set(updateWith).where('id', '=', id).execute()
+  const result = await db.updateTable('lead').set(updateWith).where('id', '=', id).returningAll().executeTakeFirst()
+  return result
 }
 
 export async function createLead(lead: NewLead) {
